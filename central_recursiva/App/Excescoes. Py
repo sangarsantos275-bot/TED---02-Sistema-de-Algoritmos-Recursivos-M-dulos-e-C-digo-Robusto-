@@ -1,1 +1,9 @@
+class OperacaoInvalidaError(Exception):
+    """Disparada quando a operação não é 'M' ou 'S'."""
+    def __init__(self, msg="ERRO: OperacaoInvalida"):
+        super().__init__(msg)
 
+class EntradaInvalidaError(Exception):
+    """Disparada quando os argumentos são inválidos, insuficientes ou negativos."""
+    def __init__(self, msg="ERRO: EntradaInvalida"):
+        super().__init__(msg)
