@@ -1,1 +1,81 @@
+import sys
 
+# Função recursiva para calcular o MDC (Algoritmo de Euclides)
+def mdc_recursivo(a, b):
+    if b == 0:
+        return a
+    return mdc_recursivo(b, a % b)
+
+# Função recursiva para calcular a soma dos dígitos de um número
+def soma_digitos_recursivo(n):
+    if n == 0:
+        return 0
+    return (n % 10) + soma_digitos_recursivo(n // 10)
+
+def main():
+    # Lê todas as linhas da entrada padrão
+    input_data = sys.stdin.read().splitlines()
+    if not input_data:
+        return
+
+    try:
+        # Lê a quantidade de operações
+        q = int(input_data[0].strip())
+    except ValueError:
+        return
+
+    # Processa cada uma das Q operações
+    for i in range(1, q + 1):
+        if i >= len(input_data):
+            break
+        
+        linha = input_data[i].strip()
+        if not linha:
+            continue
+        
+        partes = linha.split()
+        if not partes:
+            continue
+        
+        operacao = partes[0]
+
+        # Validação de operação desconhecida
+        if operacao not in ('M', 'S'):
+            print("ERRO: OperacaoInvalida")
+            continue
+
+        # Processamento da Operação M (MDC)
+        if operacao == 'M':
+            if len(partes) != 3:
+                print("ERRO: EntradaInvalida")
+                continue
+            try:
+                a = int(partes[1])
+                b = int(partes[2])
+                # M exige inteiros estritamente positivos (> 0)
+                if a <= 0 or b <= 0:
+                    print("ERRO: EntradaInvalida")
+                else:
+                    resultado = mdc_recursivo(a, b)
+                    print(f"MDC = {resultado}")
+            except ValueError:
+                print("ERRO: EntradaInvalida")
+
+        # Processamento da Operação S (Soma dos Dígitos)
+        elif operacao == 'S':
+            if len(partes) != 2:
+                print("ERRO: EntradaInvalida")
+                continue
+            try:
+                n = int(partes[1])
+                # S exige um inteiro não negativo (>= 0)
+                if n < 0:
+                    print("ERRO: EntradaInvalida")
+                else:
+                    resultado = soma_digitos_recursivo(n)
+                    print(f"SOMA = {resultado}")
+            except ValueError:
+                print("ERRO: EntradaInvalida")
+
+if __name__ == "__main__":
+    main()
